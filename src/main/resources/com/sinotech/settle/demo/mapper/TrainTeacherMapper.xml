@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sinotech.settle.demo.mapper.TrainTeacherMapper">
+  <resultMap id="BaseResultMap" type="com.sinotech.settle.demo.model.TrainTeacher">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="COMPANY_ID" jdbcType="VARCHAR" property="companyId" />
+    <result column="CODE" jdbcType="VARCHAR" property="code" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="HEAD_URL" jdbcType="VARCHAR" property="headUrl" />
+    <result column="INTRUDUCE" jdbcType="VARCHAR" property="intruduce" />
+    <result column="ENABLED" jdbcType="DECIMAL" property="enabled" />
+    <result column="CREATE_BY_ID" jdbcType="VARCHAR" property="createById" />
+    <result column="CREATE_BY_NAME" jdbcType="VARCHAR" property="createByName" />
+    <result column="CREATE_ON" jdbcType="TIMESTAMP" property="createOn" />
+    <result column="UPDATE_BY_ID" jdbcType="VARCHAR" property="updateById" />
+    <result column="UPDATE_BY_NAME" jdbcType="VARCHAR" property="updateByName" />
+    <result column="UPDATE_ON" jdbcType="TIMESTAMP" property="updateOn" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, COMPANY_ID, CODE, NAME, HEAD_URL, INTRUDUCE, ENABLED, CREATE_BY_ID, CREATE_BY_NAME, 
+    CREATE_ON, UPDATE_BY_ID, UPDATE_BY_NAME, UPDATE_ON
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TRAIN_TEACHER
+    where ID = #{id,jdbcType=VARCHAR} 
+      AND IS_DELETED = 0
+  </select>
+  <select id="getTrainTeacherList" resultMap="BaseResultMap" parameterType="java.lang.String">
+   	select 
+    <include refid="Base_Column_List" />
+    from TRAIN_TEACHER
+    where
+   		IS_DELETED = 0 
+		<if test="code != null and code != ''">
+		 AND (ID like concat(concat('%',#{code}),'%') OR CODE like concat(concat('%',#{code}),'%') OR NAME like concat(concat('%',#{code}),'%'))
+		</if>
+    ORDER BY create_on desc
+  </select>
+  <select id="getTrainTeacherIdNameList" resultMap="BaseResultMap">
+   	select ID,CODE,NAME
+      from TRAIN_TEACHER
+     where IS_DELETED = 0 
+   </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from TRAIN_TEACHER
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.sinotech.settle.demo.model.TrainTeacher">
+    insert into TRAIN_TEACHER (ID, COMPANY_ID, CODE, 
+      NAME, HEAD_URL, INTRUDUCE, 
+      ENABLED, CREATE_BY_ID, CREATE_BY_NAME, 
+      CREATE_ON, UPDATE_BY_ID, UPDATE_BY_NAME, 
+      UPDATE_ON)
+    values (#{id,jdbcType=VARCHAR}, #{companyId,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{headUrl,jdbcType=VARCHAR}, #{intruduce,jdbcType=VARCHAR}, 
+      #{enabled,jdbcType=DECIMAL}, #{createById,jdbcType=VARCHAR}, #{createByName,jdbcType=VARCHAR}, 
+      #{createOn,jdbcType=TIMESTAMP}, #{updateById,jdbcType=VARCHAR}, #{updateByName,jdbcType=VARCHAR}, 
+      #{updateOn,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sinotech.settle.demo.model.TrainTeacher">
+    insert into TRAIN_TEACHER
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID,
+      </if>
+      <if test="code != null">
+        CODE,
+      </if>
+      <if test="name != null">
+        NAME,
+      </if>
+      <if test="headUrl != null">
+        HEAD_URL,
+      </if>
+      <if test="intruduce != null">
+        INTRUDUCE,
+      </if>
+      <if test="enabled != null">
+        ENABLED,
+      </if>
+      <if test="createById != null">
+        CREATE_BY_ID,
+      </if>
+      <if test="createByName != null">
+        CREATE_BY_NAME,
+      </if>
+      <if test="createOn != null">
+        CREATE_ON,
+      </if>
+      <if test="updateById != null">
+        UPDATE_BY_ID,
+      </if>
+      <if test="updateByName != null">
+        UPDATE_BY_NAME,
+      </if>
+      <if test="updateOn != null">
+        UPDATE_ON,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="headUrl != null">
+        #{headUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="intruduce != null">
+        #{intruduce,jdbcType=VARCHAR},
+      </if>
+      <if test="enabled != null">
+        #{enabled,jdbcType=DECIMAL},
+      </if>
+      <if test="createById != null">
+        #{createById,jdbcType=VARCHAR},
+      </if>
+      <if test="createByName != null">
+        #{createByName,jdbcType=VARCHAR},
+      </if>
+      <if test="createOn != null">
+        #{createOn,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateById != null">
+        #{updateById,jdbcType=VARCHAR},
+      </if>
+      <if test="updateByName != null">
+        #{updateByName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateOn != null">
+        #{updateOn,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sinotech.settle.demo.model.TrainTeacher">
+    update TRAIN_TEACHER
+    <set>
+      <if test="companyId != null">
+        COMPANY_ID = #{companyId,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        CODE = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="headUrl != null">
+        HEAD_URL = #{headUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="intruduce != null">
+        INTRUDUCE = #{intruduce,jdbcType=VARCHAR},
+      </if>
+      <if test="enabled != null">
+        ENABLED = #{enabled,jdbcType=DECIMAL},
+      </if>
+      <if test="createById != null">
+        CREATE_BY_ID = #{createById,jdbcType=VARCHAR},
+      </if>
+      <if test="createByName != null">
+        CREATE_BY_NAME = #{createByName,jdbcType=VARCHAR},
+      </if>
+      <if test="createOn != null">
+        CREATE_ON = #{createOn,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateById != null">
+        UPDATE_BY_ID = #{updateById,jdbcType=VARCHAR},
+      </if>
+      <if test="updateByName != null">
+        UPDATE_BY_NAME = #{updateByName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateOn != null">
+        UPDATE_ON = #{updateOn,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sinotech.settle.demo.model.TrainTeacher">
+    update TRAIN_TEACHER
+    set COMPANY_ID = #{companyId,jdbcType=VARCHAR},
+      CODE = #{code,jdbcType=VARCHAR},
+      NAME = #{name,jdbcType=VARCHAR},
+      HEAD_URL = #{headUrl,jdbcType=VARCHAR},
+      INTRUDUCE = #{intruduce,jdbcType=VARCHAR},
+      ENABLED = #{enabled,jdbcType=DECIMAL},
+      CREATE_BY_ID = #{createById,jdbcType=VARCHAR},
+      CREATE_BY_NAME = #{createByName,jdbcType=VARCHAR},
+      CREATE_ON = #{createOn,jdbcType=TIMESTAMP},
+      UPDATE_BY_ID = #{updateById,jdbcType=VARCHAR},
+      UPDATE_BY_NAME = #{updateByName,jdbcType=VARCHAR},
+      UPDATE_ON = #{updateOn,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <!-- 批量删除培训讲师档案信息 -->
+  <update id="deleteByIds" parameterType="map">
+      update TRAIN_TEACHER
+      SET
+      IS_DELETED = 1,
+      UPDATE_BY_ID = #{userId,jdbcType=VARCHAR},
+      UPDATE_BY_NAME = #{realName,jdbcType=VARCHAR},
+      UPDATE_ON = sysdate
+      WHERE ID in
+      <foreach collection="list" index="index" item="id" open="(" separator="," close=")">
+          #{id}
+      </foreach>
+  </update>
+</mapper>

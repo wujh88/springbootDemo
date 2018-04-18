@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+	<context id="context1" targetRuntime="MyBatis3">
+		<!-- 指定生成的java文件的编码,没有直接生成到项目时中文可能会乱码 -->
+		<property name="javaFileEncoding" value="UTF-8" />
+		<!-- oracle配置 -->
+		<jdbcConnection driverClass="oracle.jdbc.driver.OracleDriver"
+			connectionURL="jdbc:oracle:thin:@//116.255.141.135:1790/TMS9"
+						userId="OA" password="TEST">
+			<!-- 针对oracle数据库 -->
+			<property name="remarksReporting" value="true"></property>
+
+			<!-- 针对mysql数据库 -->
+			<!--<property name="useInformationSchema" value="true"></property>-->
+		</jdbcConnection>
+		<javaTypeResolver>
+			<property name="forceBigDecimals" value="false" />
+		</javaTypeResolver>
+		<!-- model class -->
+		<javaModelGenerator targetPackage="com.sinotech.settle.schedules.model"
+							targetProject="E:\Program Files\JetBrains Workspaces\OARepository\OA\src\main\java">
+			<property name="enableSubPackages" value="true" />
+			<property name="trimStrings" value="true" />
+		</javaModelGenerator>
+		<!-- mybatis xml file -->
+		<sqlMapGenerator targetPackage="com.sinotech.settle.schedules.mapper"
+						 targetProject="E:\Program Files\JetBrains Workspaces\OARepository\OA\src\main\resources">
+			<property name="enableSubPackages" value="true" />
+		</sqlMapGenerator>
+		<!-- mapper class -->
+		<javaClientGenerator type="XMLMAPPER"
+                             targetPackage="com.sinotech.settle.schedules.mapper" targetProject="E:\Program Files\JetBrains Workspaces\OARepository\OA\src\main\java">
+			<property name="enableSubPackages" value="true" />
+		</javaClientGenerator>
+
+		<!--<table tableName="HUMAN_CHANGE_HISTORY" domainObjectName="ChangeHistory" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>
+
+		<table tableName="HUMAN_EMP_CONTRACT" domainObjectName="EmpContract" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>
+
+		<table tableName="HUMAN_REINSTATE" domainObjectName="Reinstate" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>
+
+		<table tableName="HUMAN_EMP_WORKED" domainObjectName="EmpWorked" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>
+		<table tableName="HUMAN_EMP_EDUCATE" domainObjectName="EmpEducate" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>
+		<table tableName="HUMAN_RECRUIT" domainObjectName="Recruit" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>
+		<table tableName="HUMAN_POSITIVE" domainObjectName="Positive" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>
+		<table tableName="HUMAN_MOVE" domainObjectName="Move" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>
+		<table tableName="HUMAN_EMPLOYEE" domainObjectName="Employee" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>
+		<table tableName="HUMAN_DIMISS" domainObjectName="Dimiss" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>
+		<table tableName="HUMAN_EMP_CERTIFICATE" domainObjectName="EmpCertificate" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>
+		<table tableName="HUMAN_SALARY_CHANGE" domainObjectName="SalaryChange" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>
+		<table tableName="HUMAN_PERFORM_ITEMS_TEMP" domainObjectName="PerformItemsTemp" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>
+		<table tableName="HUMAN_PERFORM_ITEMS" domainObjectName="PerformItems" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>
+
+		<table tableName="ADMIN_ITEM" domainObjectName="Item" modelType="flat" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>
+		<table tableName="ADMIN_DUTY" domainObjectName="Duty" modelType="flat" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>
+		<table tableName="ADMIN_USER" domainObjectName="User" modelType="flat" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>
+		<table tableName="ADMIN_USER_DUTY" domainObjectName="UserDuty" modelType="flat" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>
+		<table tableName="ADMIN_DUTY" domainObjectName="Duty" modelType="flat" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>
+		<table tableName="ADMIN_DUTY_PERMISSION" domainObjectName="DutyPermission" modelType="flat" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>
+
+		<table tableName="MARKET_COMPLAINT_STAS" domainObjectName="ComplaintStas" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>
+		<table tableName="MARKET_COMPLAINT" domainObjectName="Complaint" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>
+		<table tableName="MARKET_CUS_REVIEW" domainObjectName="CusReview" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>
+		<table tableName="MARKET_CUSTOMER" domainObjectName="Customer" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>
+		<table tableName="MARKET_CUS_CONT" domainObjectName="CusCont" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>
+
+		<table tableName="SUPPLY_INSTOCK" domainObjectName="Instock" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>
+		<table tableName="SUPPLY_OUTSTOCK" domainObjectName="Outstock" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>
+		<table tableName="SUPPLY_OUTSTOCK_ITEM" domainObjectName="OutstockItem" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>
+		<table tableName="SUPPLY_BOOK" domainObjectName="Book" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>
+		<table tableName="SUPPLY_INVENTORY" domainObjectName="Inventory" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>
+		<table tableName="SUPPLY_INVENTORY_ITEM" domainObjectName="InventoryItem" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>
+		<table tableName="SUPPLY_INSTOCK_ITEM" domainObjectName="InstockItem" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>
+		<table tableName="SUPPLY_BOOK" domainObjectName="Book" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>
+
+-->
+		<table tableName="OFFICE_APPROVAL_OVERDUE" domainObjectName="ApprovalOverdue" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>
+
+	</context>
+</generatorConfiguration>
+
