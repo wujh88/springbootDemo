@@ -11,42 +11,70 @@ import java.util.*;
 /**
  * 时间日期工具类
  * Haakon 2017-4-14
- * 
+ *
  */
 public class DateUtil {
 
     // 默认日期格式
-    public static final String DATE_DEFAULT_FORMAT = "yyyy-MM-dd";
+    private static final String DATE_DEFAULT_FORMAT = "yyyy-MM-dd";
 
     // 默认日期时间格式
-    public static final String DATETIME_DEFAULT_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    private static final String DATETIME_DEFAULT_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
     //毫秒级别的日期时间格式
-    public static final String DATETIME_MIL_FORMAT = "yyyy-MM-dd HH:mm:ss.SSS";
+    private static final String DATETIME_MIL_FORMAT = "yyyy-MM-dd HH:mm:ss.SSS";
 
     //默认时间格式
-    public static final String TIME_DEFAULT_FORMAT = "HH:mm:ss";
-
-    // 日期格式化
-    private static DateFormat dateFormat = null;
-
-    // 时间格式化
-    private static DateFormat dateTimeFormat = null;
-    
-    private static DateFormat dateTimeMilFormat = null;
-
-    private static DateFormat timeFormat = null;
+    private static final String TIME_DEFAULT_FORMAT = "HH:mm:ss";
 
     private static Calendar gregorianCalendar = null;
 
     static {
-        dateFormat = new SimpleDateFormat(DATE_DEFAULT_FORMAT);
-        dateTimeFormat = new SimpleDateFormat(DATETIME_DEFAULT_FORMAT);
-        dateTimeMilFormat = new SimpleDateFormat(DATETIME_MIL_FORMAT);
-        timeFormat = new SimpleDateFormat(TIME_DEFAULT_FORMAT);
         gregorianCalendar = new GregorianCalendar();
     }
-    
+
+    /**
+     *  存放不同的日期模板格式的sdf的Map
+     */
+    private static ThreadLocal<Map<String, SimpleDateFormat>> sdfMap = new ThreadLocal<Map<String, SimpleDateFormat>>() {
+        @Override
+        protected Map<String, SimpleDateFormat> initialValue() {
+            return new HashMap<String, SimpleDateFormat>();
+        }
+    };
+
+    /**
+     * 返回一个SimpleDateFormat,每个线程只会new一次pattern对应的sdf
+     *
+     * @param pattern
+     * @return
+     */
+    private static SimpleDateFormat getSdf(final String pattern) {
+        Map<String, SimpleDateFormat> tl = sdfMap.get();
+        SimpleDateFormat sdf = tl.get(pattern);
+        if (sdf == null) {
+            sdf = new SimpleDateFormat(pattern);
+            tl.put(pattern, sdf);
+        }
+        return sdf;
+    }
+
+    /**
+     * 这样每个线程只会有一个SimpleDateFormat
+     *
+     * @param date
+     * @param pattern
+     * @return
+     */
+    private static String format(Date date, String pattern) {
+        return getSdf(pattern).format(date);
+    }
+
+    private static Date parse(String dateStr, String pattern)
+            throws ParseException {
+        return getSdf(pattern).parse(dateStr);
+    }
+
     /**
      * 日期串进行格式转换，yyyyMMddHHmmss转为yyyy-MM-dd HH:mm:ss
      * @param formatDate
@@ -54,89 +82,96 @@ public class DateUtil {
      */
     public static String format2other(String formatDate) {
 //    	String formatDate = "20170809161756";
-		String reg = "(\\d{4})(\\d{2})(\\d{2})(\\d{2})(\\d{2})(\\d{2})";
-		return formatDate.replaceAll(reg, "$1-$2-$3 $4:$5:$6");
-	}
+        String reg = "(\\d{4})(\\d{2})(\\d{2})(\\d{2})(\\d{2})(\\d{2})";
+        return formatDate.replaceAll(reg, "$1-$2-$3 $4:$5:$6");
+    }
 
     /**
      * 根据格式化字符串，将日期格式化
-     * 
+     *
      * @param date
      * @param format
      * @return
      */
     public static Date formatDate(String date, String format) {
         try {
-            return new SimpleDateFormat(format).parse(date);
+            return parse(date,format);
+//            return new SimpleDateFormat(format).parse(date);
         } catch (ParseException e) {
             e.printStackTrace();
         }
         return null;
     }
-    
+
     /**
      * 日期格式化yyyy-MM-dd
-     * 
+     *
      * @param date
      * @return
      */
     public static String getDateFormat(Date date) {
-        return dateFormat.format(date);
+        return format(date, DATE_DEFAULT_FORMAT);
+//        return dateFormat.format(date);
     }
 
     /**
      * 日期时间格式化yyyy-MM-dd HH:mm:ss
-     * 
+     *
      * @param date
      * @return
      */
     public static String getDateTimeFormat(Date date) {
-        return dateTimeFormat.format(date);
+        return format(date, DATETIME_DEFAULT_FORMAT);
+//        return dateTimeFormat.format(date);
     }
 
     /**
      * 日期时间格式化yyyy-MM-dd HH:mm:ss.SSS
-     * 
+     *
      * @param date
      * @return
      */
     public static String getDateTimeMilFormat(Date date) {
-    	return dateTimeMilFormat.format(date);
+        return format(date, DATETIME_MIL_FORMAT);
+//    	return dateTimeMilFormat.format(date);
     }
-    
+
     /**
      * 时间格式化
-     * 
+     *
      * @param date
      * @return HH:mm:ss
      */
     public static String getTimeFormat(Date date) {
-        return timeFormat.format(date);
+        return format(date, TIME_DEFAULT_FORMAT);
+//        return timeFormat.format(date);
     }
 
     /**
      * 日期格式化
-     * 
+     *
      * @param date
      * @param formatStr 格式化类型
      * @return
      */
     public static String getDateFormat(Date date, String formatStr) {
         if (StringUtils.isNotBlank(formatStr)) {
-            return new SimpleDateFormat(formatStr).format(date);
+            return format(date, formatStr);
+//            return new SimpleDateFormat(formatStr).format(date);
         }
         return null;
     }
 
     /**
      * 日期格式化
-     * 
+     *
      * @param date
      * @return
      */
     public static Date getDateFormat(String date) {
         try {
-            return dateFormat.parse(date);
+            return parse(date, DATE_DEFAULT_FORMAT);
+//            return dateFormat.parse(date);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -145,13 +180,14 @@ public class DateUtil {
 
     /**
      * 时间格式化
-     * 
+     *
      * @param date
      * @return
      */
     public static Date getDateTimeFormat(String date) {
         try {
-            return dateTimeFormat.parse(date);
+            return parse(date, DATETIME_DEFAULT_FORMAT);
+//            return dateTimeFormat.parse(date);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -164,12 +200,13 @@ public class DateUtil {
      * @return
      */
     public static Date getNowDate() {
-        return DateUtil.getDateFormat(dateFormat.format(new Date()));
+        return DateUtil.getDateFormat(format(new Date(), DATE_DEFAULT_FORMAT));
+//        return DateUtil.getDateFormat(dateFormat.format(new Date()));
     }
 
     /**
      * 获取当前日期星期一日期
-     * 
+     *
      * @return date
      */
     public static Date getFirstDayOfWeek() {
@@ -181,7 +218,7 @@ public class DateUtil {
 
     /**
      * 获取当前日期星期日日期
-     * 
+     *
      * @return date
      */
     public static Date getLastDayOfWeek() {
@@ -193,7 +230,7 @@ public class DateUtil {
 
     /**
      * 获取指定日期星期一日期
-     * 
+     *
      * @param
      * @return date
      */
@@ -209,7 +246,7 @@ public class DateUtil {
 
     /**
      * 获取指定日期星期一日期
-     * 
+     *
      * @param date 指定日期
      * @return date
      */
@@ -225,7 +262,7 @@ public class DateUtil {
 
     /**
      * 获取当前月的第一天
-     * 
+     *
      * @return date
      */
     public static Date getFirstDayOfMonth() {
@@ -236,7 +273,7 @@ public class DateUtil {
 
     /**
      * 获取当前月的最后一天
-     * 
+     *
      * @return
      */
     public static Date getLastDayOfMonth() {
@@ -249,7 +286,7 @@ public class DateUtil {
 
     /**
      * 获取指定月的第一天
-     * 
+     *
      * @param date
      * @return
      */
@@ -261,7 +298,7 @@ public class DateUtil {
 
     /**
      * 获取指定月的最后一天
-     * 
+     *
      * @param date
      * @return
      */
@@ -275,7 +312,7 @@ public class DateUtil {
 
     /**
      * 获取日期前一天
-     * 
+     *
      * @param date
      * @return
      */
@@ -288,7 +325,7 @@ public class DateUtil {
 
     /**
      * 获取日期后一天
-     * 
+     *
      * @param date
      * @return
      */
@@ -298,7 +335,7 @@ public class DateUtil {
         gregorianCalendar.set(Calendar.DATE, day + 1);
         return gregorianCalendar.getTime();
     }
-    
+
     /**
      * 获取当天后几天的日期
      * 例如，今天是2017-4-14，2天后即为2017-4-16
@@ -306,15 +343,15 @@ public class DateUtil {
      * @return
      */
     public static Date getDayAfter(int count) {
-    	gregorianCalendar.setTime(new Date());
-    	int day = gregorianCalendar.get(Calendar.DATE);
+        gregorianCalendar.setTime(new Date());
+        int day = gregorianCalendar.get(Calendar.DATE);
         gregorianCalendar.set(Calendar.DATE, day + count);
-    	return gregorianCalendar.getTime();
-	}
+        return gregorianCalendar.getTime();
+    }
 
     /**
      * 获取当前年
-     * 
+     *
      * @return
      */
     public static int getNowYear() {
@@ -324,7 +361,7 @@ public class DateUtil {
 
     /**
      * 获取当前月份
-     * 
+     *
      * @return
      */
     public static int getNowMonth() {
@@ -334,7 +371,7 @@ public class DateUtil {
 
     /**
      * 获取当月天数
-     * 
+     *
      * @return
      */
     public static int getNowMonthDay() {
@@ -344,7 +381,7 @@ public class DateUtil {
 
     /**
      * 获取时间段的每一天
-     * 
+     *
      * @param startDate 开始日期
      * @param endDate 结算日期
      * @return 日期列表
@@ -369,7 +406,7 @@ public class DateUtil {
 
     /**
      * 获取提前多少个月后的时间
-     * 
+     *
      * @param monty 月数
      * @return
      */
@@ -378,7 +415,7 @@ public class DateUtil {
         c.add(Calendar.MONTH, -monty);
         return c.getTime();
     }
-    
+
     /**
      * 将时间戳转化为时间串
      * long --> "yyyy-MM-dd HH:mm:ss.SSS"
@@ -386,8 +423,8 @@ public class DateUtil {
      * @return
      */
     public static String getDateStr(Long timestamp) {
-    	return new SimpleDateFormat(DATETIME_MIL_FORMAT).format(timestamp);
-	}
+        return new SimpleDateFormat(DATETIME_MIL_FORMAT).format(timestamp);
+    }
 
     /**
      * 将时间戳转化为时间串
@@ -398,35 +435,35 @@ public class DateUtil {
     public static String getDateTimeStr(Long timestamp) {
         return new SimpleDateFormat(DATETIME_DEFAULT_FORMAT).format(timestamp);
     }
-    
+
     /**
      * 比较两个日期的大小
      * @param time
      * @param time1
-     * @return   
+     * @return
      * @author ZTF
-     * @throws ServiceException 
+     * @throws ServiceException
      * @date 2017年7月20日 上午10:20:43
      */
     public static boolean compareDate(String time,Date time1) throws ServiceException {
-    	
-    	 DateFormat df = new SimpleDateFormat("yyyyMMdd");
-        
-             Date dt1;
-             Date dt2;
-			try {
-				dt1 = df.parse(time);
-				dt2 = df.parse(df.format(time1));
-			    if (dt1.getTime() >= dt2.getTime()) {
-	                return false;
-	             }
-			} catch (ParseException e) {
-				e.printStackTrace();
-				throw new ServiceException("时间格式不正确");
-			}
-         
-        
-		return true;
+
+        DateFormat df = new SimpleDateFormat("yyyyMMdd");
+
+        Date dt1;
+        Date dt2;
+        try {
+            dt1 = df.parse(time);
+            dt2 = df.parse(df.format(time1));
+            if (dt1.getTime() >= dt2.getTime()) {
+                return false;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+            throw new ServiceException("时间格式不正确");
+        }
+
+
+        return true;
     }
 
     /**
@@ -464,8 +501,29 @@ public class DateUtil {
             return false;
         }
     }
-    public static void main(String[] args) {
-		System.out.println(DateUtil.getDateFormat(new Date(),"yyMM:HHmm").codePointCount(0, 4));
+    public static void main1(String[] args) {
+        System.out.println(DateUtil.getDateFormat(new Date(),"yyMM:HHmm").codePointCount(0, 4));
         System.out.println(getDateTimeStr(0L));
-	}
+    }
+    public static class TestSimpleDateFormatThreadSafe extends Thread {
+        @Override
+        public void run() {
+            while(true) {
+                try {
+                    this.join(200);
+                } catch (InterruptedException e1) {
+                    e1.printStackTrace();
+                }
+                System.out.println(this.getName()+":"+DateUtil.getDateTimeFormat("2018-07-26 20:46:11"));
+            }
+        }
+    }
+
+
+    public static void main(String[] args) {
+        for(int i = 0; i < 10; i++){
+            new TestSimpleDateFormatThreadSafe().start();
+        }
+
+    }
 }
