@@ -14,12 +14,7 @@ import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 
 /**
- * 项目名称：sinoTechOMS
- * 创建人：liuhe
- * 创建时间：2017/10/24
- * 修改人：
- * 修改时间：
- * 修改备注：
+ *
  */
 @Configuration
 @EnableCaching

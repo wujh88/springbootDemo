@@ -7,16 +7,7 @@ import com.github.pagehelper.PageInfo;
 import java.util.ArrayList;
 
 /**
- * 
- * 项目名称：sinoTechOMS   
- * 类名称：ReturnResult
  * 类描述：   通用的返回结果对象
- * 创建人：liuhe   
- * 创建时间：2017年10月13日
- * 修改人：liuhe   
- * 修改时间：2017年10月13日 
- * 修改备注：   
- * @version
  */
 public class ReturnResult {
 	

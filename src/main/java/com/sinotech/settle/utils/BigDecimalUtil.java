@@ -6,8 +6,7 @@ import java.math.BigDecimal;
  * 
  * @className:BigDecimalUtil
  * @Description: BigDecima运算工具类
- * @author zhouxu
- * @date 2017年11月4日上午10:33:51
+ *
  */
 public class BigDecimalUtil {
 	/**

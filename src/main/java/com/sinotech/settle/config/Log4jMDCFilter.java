@@ -12,8 +12,7 @@ import java.io.IOException;
 
 /**
  * @Description： 使用MDC标注日志上下文，在日志中添加文字信息。
- * @Author: LiuLin
- * @Date: 2018/3/10 18:22
+ *
  */
 //@Component
 public class Log4jMDCFilter  implements Filter {

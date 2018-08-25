@@ -4,9 +4,6 @@ package com.sinotech.settle.config;
 
 /**
  * @Description：rebbit mq配置
- * @ClassName: RabbitConfiguration
- * @Author: zhouxu
- * @Date: 2017/12/28 15:54
  */
 //@Configuration
 public class RabbitConfiguration {

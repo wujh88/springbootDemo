@@ -16,12 +16,7 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
- * 项目名称：sinoTechOMS
- * 创建人：liuhe
- * 创建时间：2017/10/31
- * 修改人：
- * 修改时间：
- * 修改备注：
+ *
  */
 @Component
 public class RedisCacheUtils {

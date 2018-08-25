@@ -2,9 +2,6 @@ package com.sinotech.settle.config;
 
 /**
  * 系统错误码常量
- * 
- * @author ZTF
- * @date 2017年5月9日 下午3:26:50
  */
 public class FailCodeConstants {
 	
@@ -56,5 +53,4 @@ public class FailCodeConstants {
 	/**时间戳格式有误*/
 	public static final String SYS_FAIL_CODE_E0029 = "CB_E0029";
 
-	public static final String PAY_ERROR_NOTIFY_ADDRESS = "https://mywallettest.tf56.com/payment/cashBillSite/view/payError.html?";
 }

@@ -10,7 +10,6 @@ import java.util.regex.Pattern;
 
 /**
 * String工具类
-* @author ZTF
 * @date 2017年4月26日 上午10:21:13
 **/
 public class StrUtils {

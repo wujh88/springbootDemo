@@ -22,15 +22,6 @@ import java.sql.SQLSyntaxErrorException;
 
 /**
  * 全局的异常处理器
- * 项目名称：sinoTechOMS   
- * 类名称：GlobalExceptionHandler   
- * 类描述：   
- * 创建人：liuhe   
- * 创建时间：2017年10月14日
- * 修改人：liuhe   
- * 修改时间：2017年10月14日 
- * 修改备注：   
- * @version
  */
 @ControllerAdvice
 public class GlobalExceptionHandler {

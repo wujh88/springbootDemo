@@ -14,8 +14,6 @@ import java.util.Date;
 
 /**
  * @Description： spring mvc 前端string空数据到后台转date,400异常处理
- * @Author: LiuLin
- * @Date: 2018/1/5 17:19
  */
 @Configuration
 @ControllerAdvice("com.sinotech.oa")

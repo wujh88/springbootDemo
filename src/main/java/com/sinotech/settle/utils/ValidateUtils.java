@@ -9,8 +9,6 @@ import java.util.regex.Pattern;
  * 
  * @className:ValidateUtils
  * @Description: 数据校验类
- * @author zhouxu
- * @date 2017年10月24日下午4:07:11
  */
 public class ValidateUtils {
 	

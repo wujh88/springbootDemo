@@ -8,9 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * @project：sinoTechOMS
- * @author：liuhe
- * @date：2017/11/18
+ *
  */
 public class KeyUtils {
 
