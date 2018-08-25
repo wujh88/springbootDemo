@@ -8,8 +8,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.util.JSONPObject;
-import org.apache.commons.lang.StringEscapeUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
@@ -52,7 +52,7 @@ public class JsonMapper extends ObjectMapper {
             public void serialize(String value, JsonGenerator jgen,
                                   SerializerProvider provider) throws IOException,
                     JsonProcessingException {
-                jgen.writeString(StringEscapeUtils.unescapeHtml(value));
+                jgen.writeString(StringEscapeUtils.unescapeHtml4(value));
             }
         }));
         // 设置时区
