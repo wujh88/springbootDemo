@@ -7,6 +7,7 @@ import com.sinotech.settle.utils.LogUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,10 +20,14 @@ import javax.annotation.Resource;
 public class SpeechController {
     private static final Logger LOGGER = LoggerFactory.getLogger(SpeechController.class);
 
-//    @Autowired
-    @Resource(name = "Text2audioService1")
+    @Autowired
+    @Qualifier("Text2audioService1")
+//    @Resource(name = "Text2audioService1")
     private Text2audioService text2audioService;
-    @Resource(name = "Text2audioService2")
+
+    @Autowired
+    @Qualifier("Text2audioService2")
+//    @Resource(name = "Text2audioService2")
     private Text2audioService text2audioService2;
 
     /**
