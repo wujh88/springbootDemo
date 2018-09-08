@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 
-@Service
+@Service("Text2audioService1")
 public class Text2audioServiceImpl implements Text2audioService {
 
     @Override

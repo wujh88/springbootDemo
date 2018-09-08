@@ -13,12 +13,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.Resource;
+
 @Controller
 public class SpeechController {
     private static final Logger LOGGER = LoggerFactory.getLogger(SpeechController.class);
 
-    @Autowired
+//    @Autowired
+    @Resource(name = "Text2audioService1")
     private Text2audioService text2audioService;
+    @Resource(name = "Text2audioService2")
+    private Text2audioService text2audioService2;
 
     /**
      * 测试接口
@@ -30,6 +35,7 @@ public class SpeechController {
     public ReturnResult text2audio(@RequestBody String json) {
         LOGGER.info(LogUtil.format("语音合成##SpeechController.text2audio()##业务入参" + json));
         text2audioService.text2audio(JSON.parseObject(json).getString("text"));
+        text2audioService2.text2audio("");
         return ReturnResult.success("查询成功");
 
     }
