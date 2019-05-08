@@ -15,12 +15,13 @@ import java.util.Date;
 /**
  * @Description： spring mvc 前端string空数据到后台转date,400异常处理
  */
-@Configuration
-@ControllerAdvice("com.sinotech.oa")
+//@Configuration
+@ControllerAdvice("com.sinotech.settle")
 public class BasePackageAdvice {
     @InitBinder
     public void InitBinder(WebDataBinder dataBinder) {
         dataBinder.registerCustomEditor(Date.class, new PropertyEditorSupport() {
+            @Override
             public void setAsText(String value) {
                 if (StrUtils.isNull(value)) {
                     setValue(null);
@@ -32,6 +33,7 @@ public class BasePackageAdvice {
                     }
                 }
             }
+            @Override
             public String getAsText() {
                 return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format((Date) getValue());
             }
